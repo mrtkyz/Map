@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+      #map { height: 100%; }
+      html, body { height: 100%; margin: 0; padding: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center: {lat: 39, lng: 36},
+          mapTypeId: 'terrain',
+        });
+
+        var marker = new google.maps.Marker({
+            position: {lat: 41.80, lng: 35},
+            map: map,
+            icon: 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-location-64.png',
+            animation:google.maps.Animation.DROP
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+            var line1 = [ {lat: 42, lng: 35}, {lat: 37, lng: 39} ];
+            var path1 = new google.maps.Polyline({
+            path: line1,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 1
+            });
+            path1.setMap(map);
+            
+            var line2 = [ {lat: 42, lng: 35}, {lat: 36, lng: 39} ];
+            var path2 = new google.maps.Polyline({
+            path: line2,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 1
+            });
+            path2.setMap(map);
+        });
+      }
+    </script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvCWlZT5V8vtDbIDilyzyvqRmbh_U2Djw&callback=initMap"></script>
+  </body>
+</html>
