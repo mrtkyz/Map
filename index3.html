@@ -1,85 +1,68 @@
+
 <html>
-        <head>
-            <title>Map 1</title>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9hggGIbNUIfiJXOjVYhZhanWzCeR_D-s&sensor=false"></script>
-    
-            <style>
-            html, body {
-      height: 100%;
-      margin: 0;
-    }
-    #map{
-      height: 100%;
-      margin: 0;
-    }</style>
-        </head>
-    
-        <body>
-            <div id="map"></div>
-            <script>
-                var contentString = '<div id="content">'+
-                    '<div id="siteNotice">'+
-                    '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-                    '<div id="bodyContent">'+
-                    '<img src="http://emlakkonut.com.tr/_Assets/Upload/Slider/98/murat-1-medium-jpg06072017030659.jpg" />' + 
-                    '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-                    'sandstone rock formation in the southern part of the '+
-                    'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-                    'south west of the nearest large town, Alice Springs; 450&#160;km '+
-                    '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-                    'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-                    'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-                    'Aboriginal people of the area. It has many springs, waterholes, '+
-                    'rock caves and ancient paintings. Uluru is listed as a World '+
-                    'Heritage Site.</p>'+
-                    '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-                    'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-                    '(last visited June 22, 2009).</p>'+
-                    '</div>'+
-                    '</div>';
+    <head>
+        <title>Map 1</title>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9hggGIbNUIfiJXOjVYhZhanWzCeR_D-s&sensor=false"></script>
+        
+        <style>
+            html, body {height: 100%; margin: 0; }
+            #map{ height: 100%; margin: 0; }
+        </style>
+    </head>
 
-                var locationsList = [
-                    {lat: 42, lng: 35, content: contentString},
-                    {lat: 41.5, lng: 35.3, content: contentString},
-                    {lat: 41, lng: 33.2, content: contentString},
-                    {lat: 40.5, lng: 34.3, content: contentString},
-                ];
-                
-                var markers = [];
-
-                var mapOptions = {
-                    center: new google.maps.LatLng(42,35),
-                    zoom: 7,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-                
-                for(i = 0; i < locationsList.length; i++){
-                    addMarkerWithTimeout(new google.maps.LatLng(locationsList[i].lat, locationsList[i].lng), locationsList[i].content, i * 200);
-                }
-                
-                function addMarkerWithTimeout(position, content, timeout) {
-                    window.setTimeout(function() {
-                        var marker = new google.maps.Marker({
-                            position: position,
-                            map: map,
-                            animation: google.maps.Animation.DROP,
-                            icon: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-48.png',
-                        });
-
-                        var infoWindow = new google.maps.InfoWindow({
+    <body>
+        <div id="map"></div>
+        <script>
+            var contentString = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div><h1>Uluru</h1>'+
+                '<div id="bodyContent">'+
+                '<img src="http://emlakkonut.com.tr/_Assets/Upload/Slider/98/murat-1-medium-jpg06072017030659.jpg" style="width:300px" />' + 
+                '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large sandstone rock formation in the southern part of the</p>'+
+                '</div></div>';
+            var locationsList = [
+                {lat: 42, lng: 35, content: contentString},
+                {lat: 41.5, lng: 35.3, content: contentString},
+                {lat: 41, lng: 33.2, content: contentString},
+                {lat: 40.5, lng: 34.3, content: contentString},
+            ];
+            
+            var markers = [];
+            var infoWindow;
+            var mapOptions = {
+                center: new google.maps.LatLng(42,35),
+                zoom: 7,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            
+            for(i = 0; i < locationsList.length; i++){
+                addMarkerWithTimeout(new google.maps.LatLng(locationsList[i].lat, locationsList[i].lng), locationsList[i].content, i * 200);
+            }
+            
+            function addMarkerWithTimeout(position, content, timeout) {
+                window.setTimeout(function() {
+                    var marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        icon: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-48.png',
+                    });
+                    
+                    google.maps.event.addListener(marker, 'click', function(e){
+                        if (infoWindow) 
+                            infoWindow.close();
+                        
+                        infoWindow = new google.maps.InfoWindow({
                             content: content,
-                            maxWidth: 500
+                            maxWidth: 300
                         });
                         
-                        google.maps.event.addListener(marker, 'click', function(e){
-                            infoWindow.open(map, marker);
-                        });
-
-                        markers.push(marker);
-                    }, timeout);
-                }
-            </script>
-        </body>
-    </html>
+                        infoWindow.open(map, marker);   
+                    });
+                    markers.push(marker);
+                }, timeout);
+            }
+        </script>
+    </body>
+</html>
